@@ -29,6 +29,7 @@ typedef struct {
 // Function prototypes
 int __add_element(listbuf_t* lb, void* element);
 int __get_element(listbuf_t* lb, int index, void* element);
+int __remove_element(listbuf_t *lb, int index, void *element);
 
 #define LISTBUF_DEF(type, buf, size)		\
 	__LISTBUF_VAR_DEF(type, buf, size)		\
@@ -38,24 +39,30 @@ int __get_element(listbuf_t* lb, int index, void* element);
 	}										\
 	int buf ## _get_refd(type *pt, int idx)	\
 	{										\
-		return __get_element(&buf, idx, pt);\
-	}						
+		return __get_element(&buf, idx, pt); \
+	}										\
+	int buf ## _remove_refd(type *pt, int idx)	\
+	{										\
+		return __remove_element(&buf, idx, pt); \
+	}
+	
+
 
 #define LISTBUF_ADD(buf, pt)	 buf ## _add_refd(pt)
 
 #define LISTBUF_GET(buf, pt, idx)	 buf ## _get_refd(pt, idx)
 
+#define LISTBUF_REMOVE(buf, pt, idx) buf ## _remove_refd(pt, idx)
 
-#define LISTBUF_FOREACH(buf, elem)  		\
-		int _i=0;							\
-	  	for (								\
-		_i++,								\
-		memcpy(elem, 						\
-		buf.buffer,							\
-		buf.element_size);					\
-	   	_i<buf.index+1; 					\
-	   	memcpy(elem, 						\
-		buf.buffer+(buf.element_size*_i),	\
+#define LISTBUF_FOREACH(buf, elem)  			\
+		memcpy(elem, 							\
+		buf.buffer,								\
+		buf.element_size);						\
+	  	for (									\
+		int _i=0;								\
+	   	_i<buf.index; 							\
+	   	memcpy(elem, 							\
+		buf.buffer+(buf.element_size*(_i+1)),	\
 		buf.element_size), _i++)            
 
 

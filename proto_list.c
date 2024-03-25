@@ -30,10 +30,11 @@ int __remove_element(listbuf_t* lb, int index, void* element) {
 
         int count = lb->index - index - 1;
         for (size_t i = 0; i < count; i++) {
-            memcpy(lb->buffer+(index*lb->element_size), lb->buffer+((index+i+1)*lb->element_size), lb->element_size);
+            memcpy(lb->buffer+((index+i)*lb->element_size), lb->buffer+((index+i+1)*lb->element_size), lb->element_size);
         }
-        
-        
+
+        lb->index--;
+
         return 0;
     } 
 
