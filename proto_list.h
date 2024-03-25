@@ -6,12 +6,6 @@
 #include <string.h>
 // #include "types.h"
 
-/**
- * To compile the sourcecode:
- * Mac: clang -o a.out -g main.c proto_list.c
- * Linux: gcc -o a.out -g main.c proto_list.c
- */
-
 typedef struct {
 	void * const buffer;
 	int push_count;

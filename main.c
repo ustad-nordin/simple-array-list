@@ -14,6 +14,13 @@ void printGreet() {
   printf("Yo wazup G!\n");
 }
 
+
+/**
+ * To compile the sourcecode:
+ * Mac: clang -o a.out -g main.c proto_list.c
+ * Linux: gcc -o a.out -g main.c proto_list.c
+ */
+
 int main()
 {
     user_t user1 = {1, printHello};  
